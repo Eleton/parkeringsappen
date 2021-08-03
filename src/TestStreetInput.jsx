@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import { getParkingInfo } from './parkingApi.js';
 
 export default function TestStreetInput() {
-  const [streetName, setStreetName] = useState('');
   const [parkingInfo, setParkingInfo] = useState([]);
 
-  const callParkingAPI = async () => {
-    setParkingInfo(await getParkingInfo(streetName));
+  const onEnter = async (event) => {
+    if (event.key !== 'Enter') return;
+    getParkingInfo(event.target.value).then((data) => {
+      console.log(
+        data.map((el) => {
+          return { id: el.properties.FEATURE_OBJECT_ID, address: el.properties.ADDRESS };
+        })
+      );
+      setParkingInfo(data.filter((el) => el.properties.VEHICLE === 'fordon'));
+    });
   };
 
   return (
     <div>
-      <input type="text" placeholder="Gatunamn" onChange={(e) => setStreetName(e.target.value)} value="Celsiusgatan" />
-      <button onClick={callParkingAPI}>Click me!</button>
-      {parkingInfo.map((el) => (
-        <p>{el.properties.ADDRESS}</p>
+      <input type="text" placeholder="Gatunamn" onKeyUp={onEnter} />
+      {(parkingInfo || []).map((el) => (
+        <p key={el.properties.FEATURE_OBJECT_ID}>{el.properties.ADDRESS}</p>
       ))}
     </div>
   );
