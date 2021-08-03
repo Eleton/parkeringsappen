@@ -24,7 +24,7 @@ export async function getParkingInfoByStreet(streetName) {
 
 export async function getParkingInfoByCoords(latitude, longitude, radius = 50) {
   const request = encodeURIComponent(
-    `${API_URL}/ptillaten/within?radius=${radius}&lat=${latitude}&lng=${longitude}?outputFormat=json&apiKey=${API_KEY}`
+    `${API_URL}/ptillaten/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );
   return await fetchJsonWithProxy(request);
 }
