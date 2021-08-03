@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import TestStreetInput from './TestStreetInput.jsx';
 
 function App() {
   const [coords, setCoords] = useState(null);
@@ -8,11 +9,11 @@ function App() {
     navigator.geolocation.watchPosition((geo) => {
       const { longitude, latitude, accuracy, speed } = geo.coords;
       setCoords({ longitude, latitude, accuracy, speed });
-      setUpdates(u => u + 1);
+      setUpdates((u) => u + 1);
     }, console.log);
   }, []);
   if (!coords) {
-    return <div className="App">Loading...</div>
+    return <div className="App">Loading...</div>;
   }
   return (
     <div className="App">
@@ -21,8 +22,9 @@ function App() {
       <p>Accuracy: {coords.accuracy}</p>
       <p>Speed: {coords.speed}</p>
       <p>Updates: {updates}</p>
+      <TestStreetInput />
     </div>
   );
-};
+}
 
 export default App;
