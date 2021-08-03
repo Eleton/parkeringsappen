@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import TestStreetInput from './TestStreetInput.jsx';
+import TestCoordsInput from './TestCoordsInput.jsx';
 
 function App() {
   const [coords, setCoords] = useState(null);
@@ -23,6 +24,7 @@ function App() {
       <p>Speed: {coords.speed}</p>
       <p>Updates: {updates}</p>
       <TestStreetInput />
+      <TestCoordsInput latitude={coords.latitude} longitude={coords.longitude} />
     </div>
   );
 }
