@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { getParkingInfo } from './parkingApi.js';
+import { getParkingInfoByStreet } from './parkingApi.js';
 
 export default function TestStreetInput() {
   const [parkingInfo, setParkingInfo] = useState([]);
 
   const onEnter = async (event) => {
     if (event.key !== 'Enter') return;
-    getParkingInfo(event.target.value).then((data) => {
+    getParkingInfoByStreet(event.target.value).then((data) => {
       console.log(
         data.map((el) => {
           return { id: el.properties.FEATURE_OBJECT_ID, address: el.properties.ADDRESS };
