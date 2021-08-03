@@ -24,11 +24,11 @@ class Request(object):
                           + "&lat=" + self.lat \
                           + "&lng=" + self.long + "&outputFormat=JSON&apiKey=a34d27d3-37a5-4b30-9044-6730e6ca6769"
 
-
         object_req = requests.get(object_string)
         service_req = requests.get(service_string)
-        object_data = object_req.json()
+        print(service_req.text)
         service_data = service_req.json()
+        object_data = object_req.json()
 
         self.object_features = object_data['features']
         self.service_features = service_data['features']
@@ -60,6 +60,11 @@ class Request(object):
             return True
         return now.month == month and now.day > day
 
+    # New function, used for sorting
+    def distance_to_origin(self, feature):
+        feature_point = feature['geometry']['coordinates'][0]
+        return (float(self.long) - feature_point[0]) ** 2 + (float(self.lat) - feature_point[1]) ** 2
+
     def is_allowed(self, spot_dict, service_dict):
         # NAIVE. Allowed if not regulated or reserved and not currently service time.
         spot_type = spot_dict['VF_PLATS_TYP']
@@ -67,7 +72,7 @@ class Request(object):
         is_reserved = 'Reserverad' in spot_type
         if service_dict is not None:
             # now = dt.datetime.now()
-            now = dt.datetime(2021,10,7,9)
+            now = dt.datetime(2021,12,7,9)
             weekday = WEEKDAYS[now.weekday()]
             if weekday == service_dict['START_WEEKDAY']:
                 start_time = int(service_dict['START_TIME'])
@@ -96,10 +101,17 @@ class Request(object):
                 if service_feature['properties']['FEATURE_OBJECT_ID'] == FID:
                     # print("Found service dict")
                     service_dict = service_feature['properties']
-            if self.is_allowed(feature['properties'], service_dict) and not feature['properties']['ADDRESS'] in distinct_addresses:
-                allowed_features.append(feature['properties'])
+            if not feature['properties']['ADDRESS'] in distinct_addresses:
+                feature['properties']['PARKING_ALLOWED'] = self.is_allowed(feature['properties'], service_dict)
+                allowed_features.append(feature)
                 distinct_addresses.append(feature['properties']['ADDRESS'])
         return allowed_features
+
+    def get_sorted_feature_properties(self):
+        allowed_features = self.get_allowed_features()
+        allowed_features.sort(key=self.distance_to_origin)
+        feature_properties = [feature['properties'] for feature in allowed_features]
+        return feature_properties
 
 
 
