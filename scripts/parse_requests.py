@@ -33,6 +33,8 @@ class Request(object):
         self.object_features = object_data['features']
         self.service_features = service_data['features']
 
+
+    # Not necessary feature, but helpful for testing
     def print_features(self):
         count = 0
         spot_types = []
