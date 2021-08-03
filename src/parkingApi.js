@@ -5,7 +5,6 @@ const API_KEY = process.env.REACT_APP_PARKING_API_KEY;
 async function fetchJsonWithProxy(requestUrl) {
   try {
     const result = await fetch(PROXY_URL + requestUrl);
-    console.log(result);
     const proxyData = await result.json();
     const data = JSON.parse(proxyData.contents);
     return data;

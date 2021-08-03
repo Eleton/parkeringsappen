@@ -7,11 +7,6 @@ export default function TestStreetInput() {
   const onEnter = async (event) => {
     if (event.key !== 'Enter') return;
     getParkingInfoByStreet(event.target.value).then((data) => {
-      console.log(
-        data.map((el) => {
-          return { id: el.properties.FEATURE_OBJECT_ID, address: el.properties.ADDRESS };
-        })
-      );
       setParkingInfo(data.filter((el) => el.properties.VEHICLE === 'fordon'));
     });
   };
