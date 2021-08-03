@@ -83,6 +83,7 @@ class Request(object):
                         return False
         return not is_regulated and not is_reserved
 
+    # Returns list of property dicts. These have a field "ADDRESS" which is particularly relevant
     def get_allowed_features(self):
         allowed_features = []
         distinct_addresses = []
