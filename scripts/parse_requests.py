@@ -80,15 +80,19 @@ class Request(object):
                 current_time = 100 * now.hour + now.minute
                 if start_time <= current_time <= end_time:
                     if 'START_MONTH' not in service_dict:
-                        return False
+                        return "Servicetid"
                     if service_dict['START_MONTH'] > service_dict['END_MONTH'] \
                             or (service_dict['START_MONTH'] == service_dict['END_MONTH'] and service_dict['START_DAY'] > service_dict['END_DAY']):
                         if self.before(now, service_dict['END_MONTH'], service_dict['END_DAY'] + 1) or self.after(now, service_dict['START_MONTH'], service_dict['START_DAY'] - 1):
-                            return False
+                            return "Servicetid"
                     if self.before(now, service_dict['END_MONTH'], service_dict['END_DAY'] + 1)\
                             and self.after(now, service_dict['START_MONTH'],service_dict['START_DAY'] - 1):
-                        return False
-        return not is_regulated and not is_reserved
+                        return "Servicetid"
+        if is_regulated:
+            return "Regulerad lastplats"
+        if is_reserved:
+            return "Ditt fordon får ej parkera här"
+        return "Ja"
 
     # Returns list of property dicts. These have a field "ADDRESS" which is particularly relevant
     def get_allowed_features(self):
