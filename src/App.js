@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [coords, setCoords] = useState(null);
+  const [updates, setUpdates] = useState(0);
+  useEffect(() => {
+    navigator.geolocation.watchPosition((geo) => {
+      const { longitude, latitude, accuracy, speed } = geo.coords;
+      setCoords({ longitude, latitude, accuracy, speed });
+      setUpdates(u => u + 1);
+    }, console.log);
+  }, []);
+  if (!coords) {
+    return <div className="App">Loading...</div>
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Longitude: {coords.longitude}</p>
+      <p>Latitude: {coords.latitude}</p>
+      <p>Accuracy: {coords.accuracy}</p>
+      <p>Speed: {coords.speed}</p>
+      <p>Updates: {updates}</p>
     </div>
   );
-}
+};
 
 export default App;
