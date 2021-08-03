@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/parkeringsappen/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/parkeringsappen/static/js/main.f3f8e2da.chunk.js",
+    "main.js.map": "/parkeringsappen/static/js/main.f3f8e2da.chunk.js.map",
+    "runtime-main.js": "/parkeringsappen/static/js/runtime-main.e2831891.js",
+    "runtime-main.js.map": "/parkeringsappen/static/js/runtime-main.e2831891.js.map",
+    "static/js/2.d389d331.chunk.js": "/parkeringsappen/static/js/2.d389d331.chunk.js",
+    "static/js/2.d389d331.chunk.js.map": "/parkeringsappen/static/js/2.d389d331.chunk.js.map",
+    "static/js/3.76e171d6.chunk.js": "/parkeringsappen/static/js/3.76e171d6.chunk.js",
+    "static/js/3.76e171d6.chunk.js.map": "/parkeringsappen/static/js/3.76e171d6.chunk.js.map",
+    "index.html": "/parkeringsappen/index.html",
+    "service-worker.js": "/parkeringsappen/service-worker.js",
+    "service-worker.js.map": "/parkeringsappen/service-worker.js.map",
+    "static/css/main.8c8b27cf.chunk.css.map": "/parkeringsappen/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.d389d331.chunk.js.LICENSE.txt": "/parkeringsappen/static/js/2.d389d331.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e2831891.js",
+    "static/js/2.d389d331.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.f3f8e2da.chunk.js"
+  ]
+}
