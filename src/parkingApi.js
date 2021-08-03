@@ -14,14 +14,14 @@ async function fetchJsonWithProxy(requestUrl) {
   }
 }
 
-export async function getParkingInfoByStreet(streetName) {
+export async function getSpacesByStreet(streetName) {
   const request = encodeURIComponent(
     `${API_URL}//ptillaten/street/${streetName}?outputFormat=json&apiKey=${API_KEY}`
   );
   return await fetchJsonWithProxy(request);
 }
 
-export async function getParkingInfoByCoords(latitude, longitude, radius = 50) {
+export async function getSpacesByCoords(latitude, longitude, radius = 50) {
   const request = encodeURIComponent(
     `${API_URL}/ptillaten/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );

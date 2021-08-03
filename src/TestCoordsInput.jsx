@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getParkingInfoByCoords } from './parkingApi.js';
+import { getSpacesByCoords } from './parkingApi.js';
 
 export default function TestStreetInput({ latitude, longitude, radius = 50 }) {
   const [parkingInfo, setParkingInfo] = useState([]);
 
   useEffect(() => {
-    getParkingInfoByCoords(latitude, longitude, radius).then((response) => {
+    getSpacesByCoords(latitude, longitude, radius).then((response) => {
       const vehicleSpaces = (response?.features || []).filter(
         (el) => el.properties.VEHICLE === 'fordon'
       );

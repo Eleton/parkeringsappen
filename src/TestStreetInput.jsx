@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { getParkingInfoByStreet } from './parkingApi.js';
+import { getSpacesByStreet } from './parkingApi.js';
 
 export default function TestStreetInput() {
   const [parkingInfo, setParkingInfo] = useState([]);
 
   const onEnter = async (event) => {
     if (event.key !== 'Enter') return;
-    getParkingInfoByStreet(event.target.value).then((data) => {
+    getSpacesByStreet(event.target.value).then((data) => {
       setParkingInfo(data.filter((el) => el.properties.VEHICLE === 'fordon'));
     });
   };
