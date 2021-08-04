@@ -81,7 +81,7 @@ class Request(object):
                 if cyclic_between(current_time, start_time, end_time):
                     if 'START_MONTH' not in service_dict:
                         return "Servicetid"
-                    if cyclic_between(now, service_dict['START_MONTH'], service_dict['END_MONTH']):
+                    if cyclic_between(now, (service_dict['START_MONTH'], service_dict['START_DAY']), (service_dict['END_MONTH'], service_dict['END_DAY'])):
                         return "Servicetid"
         if is_regulated:
             return "Regulerad lastplats"
