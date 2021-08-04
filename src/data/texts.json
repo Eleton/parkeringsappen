@@ -1,0 +1,26 @@
+{
+  "LOADING": [
+    "Gatuparkering",
+    "Stockholm",
+    " ",
+    "Position beräknas"
+  ],
+  "YES": [
+    "Nuvarande adress",
+    "{}",
+    "Du får parkera!",
+    "Områdeskod"
+  ],
+  "NO": [
+    "Anledning",
+    "{}",
+    "Du får inte parkera!",
+    "Närliggande förslag"
+  ],
+  "MAYBE": [
+    "Hmm...",
+    "Oj då",
+    "Vi kunde inte bestämma din position",
+    "Adress"
+  ]
+}
