@@ -4,6 +4,8 @@ import Circle from "./components/Circle";
 import { LargeText, MediumText, SmallText } from './components/ChangingText';
 import copy from "./data/texts.json";
 import './App.css';
+import TestStreetInput from './TestStreetInput.jsx';
+import TestCoordsInput from './TestCoordsInput.jsx';
 
 const colors = {
   blue: "#4296ae",
@@ -76,9 +78,11 @@ function App() {
         <Circle state={state} />
         <div style={{ minHeight: 20}}><MediumText content={copy[state][2]} /></div>
         <LargeText content={copy[state][3]} />
+        {/* <TestStreetInput /> */}
+        {coords && <TestCoordsInput latitude={coords.latitude} longitude={coords.longitude} />}
       </SymbolContainer>
     </Container>
   );
-};
+}
 
 export default App;
