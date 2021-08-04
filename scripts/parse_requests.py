@@ -72,21 +72,16 @@ class Request(object):
         is_reserved = 'Reserverad' in spot_type
         if service_dict is not None:
             # now = dt.datetime.now()
-            now = dt.datetime(2021,12,7,9)
+            now = dt.datetime(2021,12,6,5)
             weekday = WEEKDAYS[now.weekday()]
             if weekday == service_dict['START_WEEKDAY']:
                 start_time = int(service_dict['START_TIME'])
                 end_time = int(service_dict['END_TIME'])
                 current_time = 100 * now.hour + now.minute
-                if start_time <= current_time <= end_time:
+                if cyclic_between(current_time, start_time, end_time):
                     if 'START_MONTH' not in service_dict:
                         return "Servicetid"
-                    if service_dict['START_MONTH'] > service_dict['END_MONTH'] \
-                            or (service_dict['START_MONTH'] == service_dict['END_MONTH'] and service_dict['START_DAY'] > service_dict['END_DAY']):
-                        if self.before(now, service_dict['END_MONTH'], service_dict['END_DAY'] + 1) or self.after(now, service_dict['START_MONTH'], service_dict['START_DAY'] - 1):
-                            return "Servicetid"
-                    if self.before(now, service_dict['END_MONTH'], service_dict['END_DAY'] + 1)\
-                            and self.after(now, service_dict['START_MONTH'],service_dict['START_DAY'] - 1):
+                    if cyclic_between(now, service_dict['START_MONTH'], service_dict['END_MONTH']):
                         return "Servicetid"
         if is_regulated:
             return "Regulerad lastplats"
@@ -116,6 +111,33 @@ class Request(object):
         allowed_features.sort(key=self.distance_to_origin)
         feature_properties = [feature['properties'] for feature in allowed_features]
         return feature_properties
+
+# Inputs: Either all ints
+# or time Datetime object and start, end, int tuples
+def cyclic_between(time, start, end):
+    if start > end:
+        return before(time, end) or after(time, start)
+    else:
+        return before(time, end) and after(time, start)
+
+# Input: Either datetime time and (month, day) comparison
+# Or floats time and comparison
+def before(time, comparison):
+    # Case 1: Datetime
+    if len(comparison) == 2:
+        if time.month < comparison[0]: return True
+        return time.month == comparison[0] and time.day <= comparison[1]
+    else:
+        return time <= comparison
+
+
+def after(time, comparison):
+    # Case 1: Datetime
+    if len(comparison) == 2:
+        if time.month > comparison[0]: return True
+        return time.month == comparison[0] and time.day >= comparison[1]
+    else:
+        return time >= comparison
 
 
 

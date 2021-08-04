@@ -11,7 +11,9 @@ if __name__ == '__main__':
     print()
     for feature in request.get_sorted_feature_properties():
         print(feature['PARKING_ALLOWED'])
-        print(feature['OTHER_INFO'])
+        print(feature['CITATION'])
     print(len(request.get_allowed_features()))
     print(request.get_sorted_feature_properties()[0]['PARKING_ALLOWED'])
+
+
 
