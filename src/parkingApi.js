@@ -102,7 +102,10 @@ function getAllowedFeatures(spotList, serviceInfoList) {
     let { FEATURE_OBJECT_ID: id, ADDRESS: address } = spot.properties;
     let serviceInfo = serviceInfoList.find((sInfo) => sInfo.properties.FEATURE_OBJECT_ID === id);
     if (!distinctAddresses.has(address)) continue;
-    spot.properties.PARKING_ALLOWED = isAllowed(spot.properties, serviceInfo);
+    [spot.properties.PARKING_ALLOWED, spot.properties.PARKING_DISALLOWED_REASON] = isAllowed(
+      spot.properties,
+      serviceInfo
+    );
     allowedFeatures.push(spot);
     distinctAddresses.add(address);
   }
