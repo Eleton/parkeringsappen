@@ -93,3 +93,24 @@ function isAllowed(spot, serviceInfo) {
   if (isReserved) return [false, 'Ditt fordon får ej parkera här'];
   return [true, ''];
 }
+
+function getAllowedFeatures(spotList, serviceInfoList) {
+  const allowedFeatures = [];
+  const distinctAddresses = new Set();
+
+  for (let spot of spotList) {
+    let { FEATURE_OBJECT_ID: id, ADDRESS: address } = spot.properties;
+    let serviceInfo = serviceInfoList.find((sInfo) => sInfo.properties.FEATURE_OBJECT_ID === id);
+    if (!distinctAddresses.has(address)) continue;
+    spot.properties.PARKING_ALLOWED = isAllowed(spot.properties, serviceInfo);
+    allowedFeatures.push(spot);
+    distinctAddresses.add(address);
+  }
+  return allowedFeatures;
+}
+
+function getSortedProperties(allowedSpots, lat, lng) {
+  return allowedSpots
+    .sort((spot1, spot2) => distanceToOrigin(spot1, lat, lng) - distanceToOrigin(spot2, lat, lng))
+    .map((feature) => feature.properties);
+}
