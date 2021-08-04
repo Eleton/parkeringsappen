@@ -1,24 +1,26 @@
 {
   "files": {
-    "main.css": "/parkeringsappen/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/parkeringsappen/static/js/main.f3f8e2da.chunk.js",
-    "main.js.map": "/parkeringsappen/static/js/main.f3f8e2da.chunk.js.map",
-    "runtime-main.js": "/parkeringsappen/static/js/runtime-main.e2831891.js",
-    "runtime-main.js.map": "/parkeringsappen/static/js/runtime-main.e2831891.js.map",
-    "static/js/2.d389d331.chunk.js": "/parkeringsappen/static/js/2.d389d331.chunk.js",
-    "static/js/2.d389d331.chunk.js.map": "/parkeringsappen/static/js/2.d389d331.chunk.js.map",
-    "static/js/3.76e171d6.chunk.js": "/parkeringsappen/static/js/3.76e171d6.chunk.js",
-    "static/js/3.76e171d6.chunk.js.map": "/parkeringsappen/static/js/3.76e171d6.chunk.js.map",
+    "main.css": "/parkeringsappen/static/css/main.157cb4b4.chunk.css",
+    "main.js": "/parkeringsappen/static/js/main.7113bd2e.chunk.js",
+    "main.js.map": "/parkeringsappen/static/js/main.7113bd2e.chunk.js.map",
+    "runtime-main.js": "/parkeringsappen/static/js/runtime-main.3c565c3f.js",
+    "runtime-main.js.map": "/parkeringsappen/static/js/runtime-main.3c565c3f.js.map",
+    "static/js/2.99c83096.chunk.js": "/parkeringsappen/static/js/2.99c83096.chunk.js",
+    "static/js/2.99c83096.chunk.js.map": "/parkeringsappen/static/js/2.99c83096.chunk.js.map",
+    "static/js/3.cf886f18.chunk.js": "/parkeringsappen/static/js/3.cf886f18.chunk.js",
+    "static/js/3.cf886f18.chunk.js.map": "/parkeringsappen/static/js/3.cf886f18.chunk.js.map",
     "index.html": "/parkeringsappen/index.html",
     "service-worker.js": "/parkeringsappen/service-worker.js",
     "service-worker.js.map": "/parkeringsappen/service-worker.js.map",
-    "static/css/main.8c8b27cf.chunk.css.map": "/parkeringsappen/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.d389d331.chunk.js.LICENSE.txt": "/parkeringsappen/static/js/2.d389d331.chunk.js.LICENSE.txt"
+    "static/css/main.157cb4b4.chunk.css.map": "/parkeringsappen/static/css/main.157cb4b4.chunk.css.map",
+    "static/js/2.99c83096.chunk.js.LICENSE.txt": "/parkeringsappen/static/js/2.99c83096.chunk.js.LICENSE.txt",
+    "static/media/P_Icon_V02.16cd7bf2.png": "/parkeringsappen/static/media/P_Icon_V02.16cd7bf2.png",
+    "static/media/Wheel.d151e3b2.png": "/parkeringsappen/static/media/Wheel.d151e3b2.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.e2831891.js",
-    "static/js/2.d389d331.chunk.js",
-    "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.f3f8e2da.chunk.js"
+    "static/js/runtime-main.3c565c3f.js",
+    "static/js/2.99c83096.chunk.js",
+    "static/css/main.157cb4b4.chunk.css",
+    "static/js/main.7113bd2e.chunk.js"
   ]
 }
