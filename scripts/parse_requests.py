@@ -81,7 +81,7 @@ class Request(object):
                 if cyclic_between(current_time, start_time, end_time):
                     if 'START_MONTH' not in service_dict:
                         return "Servicetid"
-                    if cyclic_between(now, (service_dict['START_MONTH'], service_dict['START_DAY']), (service_dict['END_MONTH'], service_dict['END_DAY'])):
+                    if cyclic_between((now.month, now.day), (service_dict['START_MONTH'], service_dict['START_DAY']), (service_dict['END_MONTH'], service_dict['END_DAY'])):
                         return "Servicetid"
         if is_regulated:
             return "Regulerad lastplats"
@@ -115,7 +115,7 @@ class Request(object):
 # Inputs: Either all ints
 # or time Datetime object and start, end, int tuples
 def cyclic_between(time, start, end):
-    if start > end:
+    if before(start, end):
         return before(time, end) or after(time, start)
     else:
         return before(time, end) and after(time, start)
@@ -125,8 +125,8 @@ def cyclic_between(time, start, end):
 def before(time, comparison):
     # Case 1: Datetime
     if len(comparison) == 2:
-        if time.month < comparison[0]: return True
-        return time.month == comparison[0] and time.day <= comparison[1]
+        if time[0] < comparison[0]: return True
+        return time[0] == comparison[0] and time[1] <= comparison[1]
     else:
         return time <= comparison
 
@@ -134,8 +134,8 @@ def before(time, comparison):
 def after(time, comparison):
     # Case 1: Datetime
     if len(comparison) == 2:
-        if time.month > comparison[0]: return True
-        return time.month == comparison[0] and time.day >= comparison[1]
+        if time[0] > comparison[0]: return True
+        return time[0] == comparison[0] and time[1] >= comparison[1]
     else:
         return time >= comparison
 
