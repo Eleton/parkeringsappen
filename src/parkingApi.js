@@ -51,9 +51,21 @@ function after(time, comparison) {
   }
 }
 
+function deg2rad(deg) {
+  return (Math.PI / 180) * deg;
+}
+
+function distanceBetween(lat1, lng1, lat2, lng2) {
+  const [lat1rad, lat2rad, lng1rad, lng2rad] = [lat1, lng1, lat2, lng2].map(deg2rad);
+  const EARTH_RADIUS = 6371008.8;
+  const term1 = Math.sin((lng2rad - lng1rad) / 2) ** 2;
+  const term2 = Math.cos(lat1rad) * Math.cos(lat2rad) * Math.sin((lat2rad - lat1rad) / 2) ** 2;
+  return 2 * EARTH_RADIUS * Math.asin(Math.sqrt(term1 + term2));
+}
+
 function distanceToOrigin(feature, lat, lng) {
   const [fLng, fLat] = feature.geometry.coordinates[0];
-  return (lng - fLng) ** 2 + (lat - fLat) ** 2;
+  return distanceBetween(lat, lng, fLat, fLng);
 }
 
 function cyclicBetween(time, start, end) {
