@@ -1,0 +1,198 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34907230",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.039287, 59.333154],
+          [18.039351, 59.333283]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34907230,
+        "FEATURE_OBJECT_ID": 14793708,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2017-11-29T23:00:00Z",
+        "VEHICLE": "fordon",
+        "START_TIME": 600,
+        "END_TIME": 0,
+        "START_WEEKDAY": "måndag",
+        "CITATION": "0180 2017-08310",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "OTHER_INFO": "Servicetid måndag 00:00-06:00",
+        "VF_METER": 15,
+        "VF_PLATS_TYP": "Tidsreglerad lastplats",
+        "ADDRESS": "Celsiusgatan 8 - 10",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2017&LopNr=08310",
+        "PARKING_RATE": "taxa 3: 15 kr/tim vardagar 7-19, 10 kr/tim dag före helgdag 11-17, Boende: 1100 kr/månad eller 75 kr/dygn"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34907303",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.03913, 59.333174],
+          [18.039181, 59.333278]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34907303,
+        "FEATURE_OBJECT_ID": 15668278,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2018-08-13T22:00:00Z",
+        "VEHICLE": "fordon",
+        "START_TIME": 600,
+        "END_TIME": 0,
+        "START_WEEKDAY": "måndag",
+        "CITATION": "0180 2018-04023",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "OTHER_INFO": "Servicetid måndag 00:00-06:00",
+        "VF_METER": 12,
+        "VF_PLATS_TYP": "Tidsreglerad lastplats",
+        "ADDRESS": "Celsiusgatan 7",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2018&LopNr=04023",
+        "PARKING_RATE": "taxa 3: 15 kr/tim vardagar 7-19, 10 kr/tim dag före helgdag 11-17, Boende: 1100 kr/månad eller 75 kr/dygn"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34911450",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.038776, 59.332461],
+          [18.03926, 59.333431]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34911450,
+        "FEATURE_OBJECT_ID": 14793702,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2017-11-29T23:00:00Z",
+        "VEHICLE": "fordon",
+        "START_TIME": 600,
+        "END_TIME": 0,
+        "START_WEEKDAY": "måndag",
+        "CITATION": "0180 2017-08306",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "OTHER_INFO": "Servicetid måndag 00:00-06:00",
+        "VF_PLATS_TYP": "P Avgift, boende",
+        "ADDRESS": "Celsiusgatan 1 - 9",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2017&LopNr=08306",
+        "PARKING_RATE": "taxa 3: 15 kr/tim vardagar 7-19, 10 kr/tim dag före helgdag 11-17, Boende: 1100 kr/månad eller 75 kr/dygn"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34912905",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.039085, 59.333086],
+          [18.039128, 59.333173]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34912905,
+        "FEATURE_OBJECT_ID": 15668280,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2018-08-13T22:00:00Z",
+        "VEHICLE": "moped-klass2",
+        "CITATION": "0180 2018-04024",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "VF_METER": 10,
+        "VF_PLATS_TYP": "Reserverad p-plats cykel",
+        "ADDRESS": "Celsiusgatan 5 - 7",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2018&LopNr=04024",
+        "PARKING_RATE": "avgiftsfri"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34912906",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.039085, 59.333086],
+          [18.039128, 59.333173]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34912906,
+        "FEATURE_OBJECT_ID": 15668280,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2018-08-13T22:00:00Z",
+        "VEHICLE": "cykel",
+        "CITATION": "0180 2018-04024",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "VF_METER": 10,
+        "VF_PLATS_TYP": "Reserverad p-plats cykel",
+        "ADDRESS": "Celsiusgatan 5 - 7",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2018&LopNr=04024",
+        "PARKING_RATE": "avgiftsfri"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LTFR_P_TILLATEN.34923310",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [18.03894, 59.332447],
+          [18.039417, 59.333403]
+        ]
+      },
+      "geometry_name": "GEOMETRY",
+      "properties": {
+        "FID": 34923310,
+        "FEATURE_OBJECT_ID": 17404437,
+        "FEATURE_VERSION_ID": 1,
+        "EXTENT_NO": 1,
+        "VALID_FROM": "2020-05-27T22:00:00Z",
+        "VEHICLE": "fordon",
+        "START_TIME": 600,
+        "END_TIME": 0,
+        "START_WEEKDAY": "måndag",
+        "CITATION": "0180 2020-03317",
+        "STREET_NAME": "Celsiusgatan",
+        "CITY_DISTRICT": "Kungsholmen",
+        "PARKING_DISTRICT": "Kungsholmen",
+        "OTHER_INFO": "Servicetid måndag 00:00-06:00",
+        "VF_PLATS_TYP": "P Avgift, boende",
+        "ADDRESS": "Celsiusgatan 2 - 10",
+        "RDT_URL": "https://rdt.transportstyrelsen.se/rdt/AF06_View.aspx?BeslutsMyndighetKod=0180&BeslutadAr=2020&LopNr=03317",
+        "PARKING_RATE": "taxa 3: 15 kr/tim vardagar 7-19, 10 kr/tim dag före helgdag 11-17, Boende: 1100 kr/månad eller 75 kr/dygn"
+      }
+    }
+  ],
+  "totalFeatures": 6,
+  "numberMatched": 6,
+  "numberReturned": 6,
+  "timeStamp": "2021-08-05T12:37:05.494Z",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::4326" } }
+}

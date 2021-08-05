@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
-import Circle from "./components/Circle";
+import styled from 'styled-components';
+import getData from './parkingApi';
+import Circle from './components/Circle';
 import { LargeText, MediumText, SmallText } from './components/ChangingText';
-import copy from "./data/texts.json";
+import copy from './data/texts.json';
 import './App.css';
 import TestStreetInput from './TestStreetInput.jsx';
 import TestCoordsInput from './TestCoordsInput.jsx';
 
 const colors = {
-  blue: "#4296ae",
-  green: "#309f5d",
-  red: "#bf3838",
-  yellow: "#d6ad4f",
-  white: "#d4d4d4"
-}
+  blue: '#4296ae',
+  green: '#309f5d',
+  red: '#bf3838',
+  yellow: '#d6ad4f',
+  white: '#d4d4d4',
+};
+
+const lat = 59.3411517;
+const lng = 18.092465;
+// const lat = 59.3328297;
+// const lng = 18.0363534;
 
 // state = "LOADING" || "YES" || "NO" || "MAYBE"
 
@@ -22,11 +28,11 @@ const Container = styled.div`
   height: 100%;
   background-color: ${({ state }) => {
     switch (state) {
-      case "YES":
+      case 'YES':
         return colors.green;
-      case "NO":
+      case 'NO':
         return colors.red;
-      case "MAYBE":
+      case 'MAYBE':
         return colors.yellow;
       default:
         return colors.blue;
@@ -40,46 +46,57 @@ const Container = styled.div`
 `;
 
 const SymbolContainer = styled.div`
-  transform: translateY(${({ pending }) => {
-    if (pending) {
-      return "calc(45vh - 50%)"
-    }
-    return 0
-  }});
+  transform: translateY(
+    ${({ pending }) => {
+      if (pending) {
+        return 'calc(45vh - 50%)';
+      }
+      return 0;
+    }}
+  );
   transition: transform 0.5s ease-out 0.4s;
 `;
 
 function App() {
-  const [coords, setCoords] = useState(null);
-  const [state, setState] = useState("LOADING");
+  const [coords, setCoords] = useState({ latitude: lat, longitude: lng });
+  // const [coords, setCoords] = useState(null);
+  const [state, setState] = useState('LOADING');
+  // useEffect(() => {
+  //   navigator.geolocation.watchPosition((geo) => {
+  //     const { longitude, latitude, accuracy, speed } = geo.coords;
+  //     setCoords({ longitude, latitude, accuracy, speed });
+  //     setState('YES');
+  //   }, console.log);
+  // }, []);
+
   useEffect(() => {
-    navigator.geolocation.watchPosition((geo) => {
-      const { longitude, latitude, accuracy, speed } = geo.coords;
-      setCoords({ longitude, latitude, accuracy, speed });
-      setState("YES");
-    }, console.log);
-  }, []);
+    if (coords) {
+      getData(coords.latitude, coords.longitude).then((x) => console.log('bju', x));
+    }
+  }, [coords]);
 
   return (
     <Container
       state={state}
       // onClick={() => setState("YES")}
       tabIndex="0"
-      onKeyDown={e => {
-        if (e.key === "ArrowUp") setState("LOADING");
-        if (e.key === "ArrowRight") setState("YES");
-        if (e.key === "ArrowDown") setState("NO");
-        if (e.key === "ArrowLeft") setState("MAYBE");
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowUp') setState('LOADING');
+        if (e.key === 'ArrowRight') setState('YES');
+        if (e.key === 'ArrowDown') setState('NO');
+        if (e.key === 'ArrowLeft') setState('MAYBE');
       }}
     >
-      <SymbolContainer pending={state === "LOADING"}>
+      <SymbolContainer pending={state === 'LOADING'}>
         <MediumText content={copy[state][0]} />
         <LargeText content={copy[state][1]} />
         <Circle state={state} />
-        <div style={{ minHeight: 20}}><MediumText content={copy[state][2]} /></div>
+        <div style={{ minHeight: 20 }}>
+          <MediumText content={copy[state][2]} />
+        </div>
         <LargeText content={copy[state][3]} />
         {/* <TestStreetInput /> */}
-        {coords && <TestCoordsInput latitude={coords.latitude} longitude={coords.longitude} />}
+        {/* {coords && <TestCoordsInput latitude={coords.latitude} longitude={coords.longitude} />} */}
       </SymbolContainer>
     </Container>
   );

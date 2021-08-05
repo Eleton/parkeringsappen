@@ -21,14 +21,14 @@ export async function getSpacesByStreet(streetName) {
   return await fetchJsonWithProxy(request);
 }
 
-export async function getSpacesByCoords(latitude, longitude, radius = 50) {
+export async function getSpacesByCoords(latitude, longitude, radius = 250) {
   const request = encodeURIComponent(
     `${API_URL}/ptillaten/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );
   return await fetchJsonWithProxy(request);
 }
 
-export async function getServiceInfoByCoords(latitude, longitude, radius = 50) {
+export async function getServiceInfoByCoords(latitude, longitude, radius = 250) {
   const request = encodeURIComponent(
     `${API_URL}/servicedagar/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );
@@ -66,8 +66,9 @@ function cyclicBetween(time, start, end) {
 
 function isAllowed(spot, serviceInfo) {
   const WEEKDAYS = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
-  const isRegulated = spot.VF_PLATS_TYP.contains('Tidsreglerad');
-  const isReserved = spot.VF_PLATS_TYP.contains('Reserverad');
+  const isRegulated = spot.VF_PLATS_TYP.includes('Tidsreglerad');
+  const isReserved = spot.VF_PLATS_TYP.includes('Reserverad');
+  console.log(serviceInfo);
   if (Object.keys(serviceInfo).length) {
     const { START_WEEKDAY, START_TIME, END_TIME, START_MONTH, END_MONTH, START_DAY, END_DAY } =
       serviceInfo;
@@ -101,7 +102,8 @@ function getAllowedFeatures(spotList, serviceInfoList) {
   for (let spot of spotList) {
     let { FEATURE_OBJECT_ID: id, ADDRESS: address } = spot.properties;
     let serviceInfo = serviceInfoList.find((sInfo) => sInfo.properties.FEATURE_OBJECT_ID === id);
-    if (!distinctAddresses.has(address)) continue;
+    if (!serviceInfo) continue;
+    if (distinctAddresses.has(address)) continue;
     [spot.properties.PARKING_ALLOWED, spot.properties.PARKING_DISALLOWED_REASON] = isAllowed(
       spot.properties,
       serviceInfo
@@ -114,6 +116,22 @@ function getAllowedFeatures(spotList, serviceInfoList) {
 
 function getSortedProperties(allowedSpots, lat, lng) {
   return allowedSpots
-    .sort((spot1, spot2) => distanceToOrigin(spot1, lat, lng) - distanceToOrigin(spot2, lat, lng))
-    .map((feature) => feature.properties);
+    .map((spot) => ({ ...spot, DISTANCE_TO_ORIGIN: distanceToOrigin(spot, lat, lng) }))
+    .sort((spot1, spot2) => spot1.DISTANCE_TO_ORIGIN - spot2.DISTANCE_TO_ORIGIN)
+    .map(({ properties, geometry, DISTANCE_TO_ORIGIN }) => ({
+      ...properties,
+      COORDINATES: geometry.coordinates,
+      DISTANCE_TO_ORIGIN,
+    }));
 }
+
+async function forAimanToImplement(lat, lng) {
+  const spaces = await getSpacesByCoords(lat, lng);
+  const serviceInfo = await getServiceInfoByCoords(lat, lng);
+  console.log({ spaces, serviceInfo });
+  const allowed = getAllowedFeatures(spaces.features, serviceInfo.features);
+  const sortedAllowed = getSortedProperties(allowed, lat, lng);
+  return sortedAllowed;
+}
+
+export default forAimanToImplement;
