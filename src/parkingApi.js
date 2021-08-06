@@ -21,14 +21,14 @@ export async function getSpacesByStreet(streetName) {
   return await fetchJsonWithProxy(request);
 }
 
-export async function getSpacesByCoords(latitude, longitude, radius = 250) {
+export async function getSpacesByCoords(latitude, longitude, radius = 200) {
   const request = encodeURIComponent(
     `${API_URL}/ptillaten/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );
   return await fetchJsonWithProxy(request);
 }
 
-export async function getServiceInfoByCoords(latitude, longitude, radius = 250) {
+export async function getServiceInfoByCoords(latitude, longitude, radius = 200) {
   const request = encodeURIComponent(
     `${API_URL}/servicedagar/within?radius=${radius}&lat=${latitude}&lng=${longitude}&outputFormat=json&apiKey=${API_KEY}`
   );
@@ -51,21 +51,37 @@ function after(time, comparison) {
   }
 }
 
-function deg2rad(deg) {
-  return (Math.PI / 180) * deg;
+function measure(lat1, lon1, lat2, lon2) {
+  // generally used geo measurement function
+  var R = 6378.137; // Radius of earth in KM
+  var dLat = (lat2 * Math.PI) / 180 - (lat1 * Math.PI) / 180;
+  var dLon = (lon2 * Math.PI) / 180 - (lon1 * Math.PI) / 180;
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d * 1000; // meters
 }
 
-function distanceBetween(lat1, lng1, lat2, lng2) {
-  const [lat1rad, lat2rad, lng1rad, lng2rad] = [lat1, lng1, lat2, lng2].map(deg2rad);
-  const EARTH_RADIUS = 6371008.8;
-  const term1 = Math.sin((lng2rad - lng1rad) / 2) ** 2;
-  const term2 = Math.cos(lat1rad) * Math.cos(lat2rad) * Math.sin((lat2rad - lat1rad) / 2) ** 2;
-  return 2 * EARTH_RADIUS * Math.asin(Math.sqrt(term1 + term2));
-}
+// function deg2rad(deg) {
+//   return (Math.PI / 180) * deg;
+// }
+
+// function distanceBetween(lat1, lng1, lat2, lng2) {
+//   const [lat1rad, lat2rad, lng1rad, lng2rad] = [lat1, lng1, lat2, lng2].map(deg2rad);
+//   const EARTH_RADIUS = 6371008.8;
+//   const term1 = Math.sin((lng2rad - lng1rad) / 2) ** 2;
+//   const term2 = Math.cos(lat1rad) * Math.cos(lat2rad) * Math.sin((lat2rad - lat1rad) / 2) ** 2;
+//   return 2 * EARTH_RADIUS * Math.asin(Math.sqrt(term1 + term2));
+// }
 
 function distanceToOrigin(feature, lat, lng) {
   const [fLng, fLat] = feature.geometry.coordinates[0];
-  return distanceBetween(lat, lng, fLat, fLng);
+  return measure(lat, lng, fLat, fLng);
 }
 
 function cyclicBetween(time, start, end) {
@@ -80,7 +96,6 @@ function isAllowed(spot, serviceInfo) {
   const WEEKDAYS = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag'];
   const isRegulated = spot.VF_PLATS_TYP.includes('Tidsreglerad');
   const isReserved = spot.VF_PLATS_TYP.includes('Reserverad');
-  console.log(serviceInfo);
   if (Object.keys(serviceInfo).length) {
     const { START_WEEKDAY, START_TIME, END_TIME, START_MONTH, END_MONTH, START_DAY, END_DAY } =
       serviceInfo;
@@ -140,7 +155,6 @@ function getSortedProperties(allowedSpots, lat, lng) {
 async function forAimanToImplement(lat, lng) {
   const spaces = await getSpacesByCoords(lat, lng);
   const serviceInfo = await getServiceInfoByCoords(lat, lng);
-  console.log({ spaces, serviceInfo });
   const allowed = getAllowedFeatures(spaces.features, serviceInfo.features);
   const sortedAllowed = getSortedProperties(allowed, lat, lng);
   return sortedAllowed;

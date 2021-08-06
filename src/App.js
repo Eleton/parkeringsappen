@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import getData from './parkingApi';
 import Circle from './components/Circle';
-import { LargeText, MediumText, SmallText } from './components/ChangingText';
+import { LargeText, MediumText } from './components/ChangingText';
 import copy from './data/texts.json';
 import './App.css';
-import TestStreetInput from './TestStreetInput.jsx';
-import TestCoordsInput from './TestCoordsInput.jsx';
 
 const colors = {
   blue: '#4296ae',
@@ -16,11 +14,8 @@ const colors = {
   white: '#d4d4d4',
 };
 
-const lat = 59.3411517;
-const lng = 18.092465;
-// const lat = 59.3328297;
-// const lng = 18.0363534;
-
+// const lat = 59.3411517;
+// const lng = 18.092465;
 // state = "LOADING" || "YES" || "NO" || "MAYBE"
 
 const Container = styled.div`
@@ -58,45 +53,76 @@ const SymbolContainer = styled.div`
 `;
 
 function App() {
-  const [coords, setCoords] = useState({ latitude: lat, longitude: lng });
-  // const [coords, setCoords] = useState(null);
+  // const [coords, setCoords] = useState({ latitude: lat, longitude: lng });
+  const [coords, setCoords] = useState(null);
   const [state, setState] = useState('LOADING');
-  // useEffect(() => {
-  //   navigator.geolocation.watchPosition((geo) => {
-  //     const { longitude, latitude, accuracy, speed } = geo.coords;
-  //     setCoords({ longitude, latitude, accuracy, speed });
-  //     setState('YES');
-  //   }, console.log);
-  // }, []);
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    navigator.geolocation.watchPosition(
+      (geo) => {
+        const { longitude, latitude, accuracy, speed } = geo.coords;
+        setCoords({ longitude, latitude, accuracy, speed });
+      },
+      (err) => {
+        console.log(err);
+        setState('MAYBE');
+      }
+    );
+  }, []);
 
   useEffect(() => {
     if (coords) {
-      getData(coords.latitude, coords.longitude).then((x) => console.log('bju', x));
+      getData(coords.latitude, coords.longitude).then((res) => {
+        const resData = res.map(
+          ({
+            ADDRESS,
+            COORDINATES,
+            DISTANCE_TO_ORIGIN,
+            PARKING_ALLOWED,
+            PARKING_DISALLOWED_REASON,
+          }) => ({
+            address: ADDRESS,
+            coordinates: COORDINATES,
+            distanceToOrigins: DISTANCE_TO_ORIGIN,
+            parkingAllowed: PARKING_ALLOWED,
+            parkingDisallowedReason: PARKING_DISALLOWED_REASON,
+          })
+        );
+        // .filter(({ parkingAllowed }) => !parkingAllowed);
+        if (resData.length === 0) {
+          setState('MAYBE');
+        } else {
+          if (resData[0].parkingAllowed) {
+            setState('YES');
+          } else {
+            setState('NO');
+          }
+          setData(resData);
+        }
+      });
     }
   }, [coords]);
 
+  const header = (str) => {
+    if (state === 'YES') {
+      return str.replace('{}', data && data[0]?.address);
+    }
+    if (state === 'NO') {
+      return str.replace('{}', data && data[0]?.parkingDisallowedReason);
+    }
+    return str;
+  };
+
   return (
-    <Container
-      state={state}
-      // onClick={() => setState("YES")}
-      tabIndex="0"
-      onKeyDown={(e) => {
-        if (e.key === 'ArrowUp') setState('LOADING');
-        if (e.key === 'ArrowRight') setState('YES');
-        if (e.key === 'ArrowDown') setState('NO');
-        if (e.key === 'ArrowLeft') setState('MAYBE');
-      }}
-    >
+    <Container state={state}>
       <SymbolContainer pending={state === 'LOADING'}>
         <MediumText content={copy[state][0]} />
-        <LargeText content={copy[state][1]} />
+        <LargeText content={header(copy[state][1])} />
         <Circle state={state} />
         <div style={{ minHeight: 20 }}>
-          <MediumText content={copy[state][2]} />
+          <LargeText content={copy[state][2]} />
         </div>
-        <LargeText content={copy[state][3]} />
-        {/* <TestStreetInput /> */}
-        {/* {coords && <TestCoordsInput latitude={coords.latitude} longitude={coords.longitude} />} */}
+        {/* <LargeText content={copy[state][3]} /> */}
       </SymbolContainer>
     </Container>
   );
