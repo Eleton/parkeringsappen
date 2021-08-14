@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import getData from './parkingApi';
 import Circle from './components/Circle';
 import { LargeText, MediumText } from './components/ChangingText';
+import Suggestion from './components/Suggestions';
 import copy from './data/texts.json';
 import './App.css';
 
@@ -17,6 +18,7 @@ const colors = {
 // const lat = 59.3411517;
 // const lng = 18.092465;
 // state = "LOADING" || "YES" || "NO" || "MAYBE"
+// const latlng = { latitude: 59.342097, longitude: 18.095595 };
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -50,13 +52,17 @@ const SymbolContainer = styled.div`
     }}
   );
   transition: transform 0.5s ease-out 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 function App() {
-  // const [coords, setCoords] = useState({ latitude: lat, longitude: lng });
+  // const [coords, setCoords] = useState(latlng);
   const [coords, setCoords] = useState(null);
   const [state, setState] = useState('LOADING');
   const [data, setData] = useState(null);
+  console.log(data);
   useEffect(() => {
     navigator.geolocation.watchPosition(
       (geo) => {
@@ -83,7 +89,7 @@ function App() {
           }) => ({
             address: ADDRESS,
             coordinates: COORDINATES,
-            distanceToOrigins: DISTANCE_TO_ORIGIN,
+            distanceToOrigin: DISTANCE_TO_ORIGIN,
             parkingAllowed: PARKING_ALLOWED,
             parkingDisallowedReason: PARKING_DISALLOWED_REASON,
           })
@@ -108,6 +114,13 @@ function App() {
       return str.replace('{}', data && data[0]?.address);
     }
     if (state === 'NO') {
+      return str.replace('{}', data && data[0]?.address);
+    }
+    return str;
+  };
+
+  const footer = (str) => {
+    if (state === 'NO') {
       return str.replace('{}', data && data[0]?.parkingDisallowedReason);
     }
     return str;
@@ -120,9 +133,12 @@ function App() {
         <LargeText content={header(copy[state][1])} />
         <Circle state={state} />
         <div style={{ minHeight: 20 }}>
-          <LargeText content={copy[state][2]} />
+          <LargeText content={footer(copy[state][2])} />
         </div>
-        {/* <LargeText content={copy[state][3]} /> */}
+        <MediumText content={copy[state][3]} />
+        {(state === 'YES' || state === 'NO') && data && (
+          <Suggestion suggestions={data.slice(1).filter((s) => s.parkingAllowed)} />
+        )}
       </SymbolContainer>
     </Container>
   );
